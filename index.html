@@ -76,7 +76,50 @@
             });
         }
 
+        var connection = new WebSocket('ws://html5rocks.websocket.org/echo');
+        onnection.onmessage = function (e) {
+  console.log('Server says: ' + e.data);
+};
+
+// Send message to the server
+connection.send('Hello there!');
         displayMessages();
+
+        connection.onopen = function () {
+  console.log('WS connection established.');
+  // This means it is connected now.
+  console.log(connection.readyState); // 1 - OPEN (from 0)
+};
+
+// Log errors
+connection.onerror = function (error) {
+  console.log('WebSocket connection failed:' + error);
+  // This means the connection failed.
+  console.log(connection.readyState); // 3 - CLOSED (probably from 0)
+};
+
+connection.onclose = function () {
+  console.log('WS connection closed.');
+  // This means the connection closed.
+  console.log(connection.readyState); // 3 - CLOSED
+};
+
+
+var file = document.querySelector('input[type="file"]').files[0];
+connection.send(file);
+
+
+connection.binaryType = 'arraybuffer';
+  connection.onmessage = function(e) {
+      console.log(e.data.byteLength); // ArrayBuffer object if binary
+  };
+
+
+  console.log(connection.extensions);
+
+
+
+
     </script>
 </body>
 
