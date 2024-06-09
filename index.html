@@ -1,67 +1,83 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>dofpfd</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-  <head>
-    <title>reCAPTCHA demo: Running both v2 and v3</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=v3_site_key"></script>
-    <script>
-      grecaptcha.ready(() => {
-        grecaptcha.render('html_element', {
-           'sitekey' : 'v2_site_key'
-        });
-      });
-    </script>
-    <script>
-      function onSubmit() {
-        grecaptcha.ready(() => {
-            grecaptcha.execute('v3_site_key', {action: 'homepage'}).then((token) => {
-              
-            });
-        });
-      }
-    </script>
-  </head>
-
- 
-</html> -->
-
-
 <!DOCTYPE html>
-<html>
-  <link rel="stylesheet" href="style.css">
+<html lang="en">
+
 <head>
-	<title>Таймер для печати текста</title>
-	
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #chat-window {
+            height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+
+        .message {
+            margin: 5px 0;
+            background-color: #f9f9f9;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <img src="https://vk.com/sticker/1-79313-512" alt="">
-    <p>Tipsitype</p>
-  </header>
+    <div class="container">
+        <h1>Chat Room</h1>
 
-	<textarea id="text" placeholder="Начните печатать текст сюда"></textarea>
-	<div id="timer">00:00:00</div>
+        <div id="chat-window"></div>
 
-  <p>Word count: <span id="wordCount">0</span></p>
-<p>Character count: <span id="charCount">0</span></p>
-	
-<img src="https://tgram.ru/wiki/stickers/img/tipsy_vk/gif/19.gif" alt="">
+        <input type="text" id="message-input" placeholder="Enter your message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
 
+    <script>
+        let chatMessages = localStorage.getItem('chatMessages') ? JSON.parse(localStorage.getItem('chatMessages')) : [];
 
+        function sendMessage() {
+            let messageInput = document.getElementById('message-input');
+            let message = messageInput.value;
+            chatMessages.push(message);
+            displayMessages();
+            messageInput.value = '';
+            localStorage.setItem('chatMessages', JSON.stringify(chatMessages));
+        }
 
+        function displayMessages() {
+            let chatWindow = document.getElementById('chat-window');
+            chatWindow.innerHTML = '';
+            chatMessages.forEach(message => {
+                let messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.textContent = message;
+                chatWindow.appendChild(messageElement);
+            });
+        }
 
+        displayMessages();
+    </script>
 </body>
-</html>
 
-
-
-
-<script src="script.js"></script>
-</body>
 </html>
